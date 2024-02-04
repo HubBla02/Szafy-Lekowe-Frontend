@@ -1,0 +1,9 @@
+<div class="container text-center mt-4">
+    <h2 class="mb-32">Status alarmu</h2>
+    <h4 *ngIf="alarmValue; else normalState" style="color: red;">Wykryto alarm! Konieczne działania!</h4>
+    <ng-template #normalState>
+      <h4 style="color: green;">Wszystko jest w normie</h4>
+    </ng-template>
+  </div>
+  
+  

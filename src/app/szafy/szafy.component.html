@@ -1,0 +1,76 @@
+<div class="container">
+  <h2 class="text-center mt-3">Szafy </h2>
+
+  <table class="table text-center">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Temperatura w pierwszej komorze</th>
+        <th>Temperatura w drugiej komorze</th>
+        <th>Usterka</th>
+        <th>Alarm</th>
+        <th>Akcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let szafa of szafy">
+        <td>{{ szafa.id }}</td>
+        <td>{{ szafa.temperatura1 }}</td>
+        <td>{{ szafa.temperatura2 }}</td>
+        <td>
+          <span *ngIf="szafa.czyZepsuta">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-dash-circle-fill text-danger" viewBox="0 0 16 16">
+              <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1z" />
+            </svg>
+          </span>
+          <span *ngIf="!szafa.czyZepsuta"> Brak </span>
+        </td>
+        <td>
+          <span *ngIf="szafa.alarm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-dash-circle-fill text-danger" viewBox="0 0 16 16">
+              <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1z" />
+            </svg>
+          </span>
+          <span *ngIf="!szafa.alarm"> Brak </span>
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="edytujSzafe(szafa.id)">Edytuj</button>
+          <button class="btn btn-danger" style="margin-left: 8px;" (click)="usunSzafe(szafa.id)">Usuń</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <form #dodajForm="ngForm" *ngIf="!edytowanaSzafa && !dodawanieSzafy">
+    <div class="form-group">
+      <label for="temperatura1">Temperatura 1:</label>
+      <input type="number" [(ngModel)]="nowaSzafa.temperatura1" name="temperatura1" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="temperatura2">Temperatura 2:</label>
+      <input type="number" [(ngModel)]="nowaSzafa.temperatura2" name="temperatura2" class="form-control" required>
+    </div>
+    <button class="btn btn-primary mt-2" (click)="dodajSzafe()">Dodaj nową szafę</button>
+  </form>
+
+  <form #edytujForm="ngForm" *ngIf="edytowanaSzafa && !dodawanieSzafy">
+    <div class="form-group">
+      <label for="temperatura1">Temperatura 1:</label>
+      <input type="number" [(ngModel)]="edytowanaSzafa.temperatura1" name="temperatura1" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="temperatura2">Temperatura 2:</label>
+      <input type="number" [(ngModel)]="edytowanaSzafa.temperatura2" name="temperatura2" class="form-control" required>
+    </div>
+    <div class="form-group mt-1">
+      <label for="czyZepsuta">Usterka:</label>
+      <input type="checkbox" style="margin-left: 0.5%; margin-top: 0.5%;" [(ngModel)]="edytowanaSzafa.czyZepsuta" name="czyZepsuta" class="form-check-input">
+    </div>
+    <button class="btn btn-success mt-2" (click)="zatwierdzEdycje(edytowanaSzafa.id)">Zatwierdź</button>
+    <button class="btn btn-danger mt-2" style="margin-left: 0.5%;" (click)="anulujEdycje()">Anuluj</button>
+  </form> 
+</div>
